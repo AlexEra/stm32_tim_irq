@@ -37,7 +37,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	} else if (htim->Instance == TIM4) {
 		tim_irq_callback(&irq_tim_4);
 	}
-#if defined(__STM32F405xx_H) || defined__STM32F407xx_H()
+#if defined(__STM32F405xx_H) || defined(__STM32F407xx_H)
 	else if (htim->Instance == TIM5) {
 		tim_irq_callback(&irq_tim_5);
 	} else if (htim->Instance == TIM6) {
