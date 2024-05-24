@@ -7,7 +7,7 @@
 */
 static void tim_irq_callback(tim_irq_t *p_tim_irq) {
 	p_tim_irq->irq_flag = 1;
-	if (p_tim_irq->p_irq_tim_func != NULL) p_tim_irq->p_irq_tim_func(p_tim_irq);
+	if (p_tim_irq->p_irq_tim_func != NULL) p_tim_irq->p_irq_tim_func();
 }
 
 void tim_irq_processing(tim_irq_t *p_tim_irq) {
