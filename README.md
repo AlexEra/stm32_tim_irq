@@ -16,9 +16,9 @@ Example
 // This example uses TIM1.
 
 // callback routine
-void my_tim_1_callback(tim_irq_t *p_tim_irq) {
+void my_tim_1_callback(void) {
     // Stop after timer update
-    tim_irq_default_stop(p_tim_irq);
+    tim_irq_default_stop(&irq_tim_1);
 }
 
 void my_tim_evt_proc(void) {
@@ -31,11 +31,12 @@ int main() {
     /*
     ... bacis STM32 configs...
     */
+    irq_tim_1.p_tim = &htim1; // it is important to write the address of the timer's structure
     irq_tim_1.p_irq_tim_func = my_tim_1_callback;
     irq_tim_1.p_irq_processing = my_tim_evt_proc;
-    tim_irq_default_start(irq_tim_1);
+    tim_irq_default_start(&irq_tim_1); // starting the timer
     while (1) {
-        tim_irq_processing(&irq_tim_1);
+        tim_irq_processing(&irq_tim_1); // default processing function
     }
     return 0;
 }
