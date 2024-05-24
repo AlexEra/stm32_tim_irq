@@ -5,11 +5,12 @@
 
 
 typedef struct {
-	void (*p_irq_tim_func) (tim_irq_t *p_tim_irq); // указатель на обработчик прерывания
+	void (*p_irq_tim_func) (void); // указатель на обработчик прерывания
 	void (*p_irq_processing) (void); // указатель на функцию, которая будет обрабатывать событие
 	TIM_HandleTypeDef *p_tim; // указатель на структуру таймера
 	uint8_t irq_flag; // флаг состояния таймера
 } tim_irq_t;
+
 tim_irq_t irq_tim_1, irq_tim_2, irq_tim_3, irq_tim_4; // структуры для обработки прерываний таймеров
 #if defined(__STM32F405xx_H) || defined(__STM32F407xx_H)
 tim_irq_t irq_tim_5, irq_tim_6, irq_tim_7, irq_tim_8, irq_tim_9,
