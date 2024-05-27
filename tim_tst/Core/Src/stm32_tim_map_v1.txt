@@ -1,0 +1,27 @@
+#include "stm32_tim_map_v1.h"
+
+
+TimerInterruptProc tim_interrupt_service;
+
+TimerInterruptProc::TimerInterruptProc() {}
+
+TimerInterruptProc::~TimerInterruptProc() {}
+
+void user_tim_handler(TIM_HandleTypeDef &timer) {
+	if (tim_interrupt_service.tim_handler[&timer])
+		tim_interrupt_service.tim_handler[&timer]();
+}
+
+void add_tim_callback(TIM_HandleTypeDef &timer, void (*p_fcn) (void)) {
+	tim_interrupt_service.tim_callback[&timer] = p_fcn;
+}
+
+void add_tim_handler(TIM_HandleTypeDef &timer, void (*p_fcn) (void)) {
+	tim_interrupt_service.tim_handler[&timer] = p_fcn;
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if (tim_interrupt_service.tim_callback[htim])
+		tim_interrupt_service.tim_callback[htim]();
+}
+

@@ -1,0 +1,26 @@
+#pragma once
+
+#include <map>
+#include <stdint.h>
+#include "tim.h"
+
+
+void user_tim_handler(TIM_HandleTypeDef &timer);
+void add_tim_callback(TIM_HandleTypeDef &timer, void (*p_fcn) (void));
+void add_tim_handler(TIM_HandleTypeDef &timer, void (*p_fcn) (void));
+
+
+class TimerInterruptProc {
+public:
+	TimerInterruptProc();
+	~TimerInterruptProc();
+	friend void user_tim_handler(TIM_HandleTypeDef &timer);
+	friend void add_tim_callback(TIM_HandleTypeDef &timer, void (*p_fcn) (void));
+	friend void add_tim_handler(TIM_HandleTypeDef &timer, void (*p_fcn) (void));
+	friend void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+private:
+	std::map<TIM_HandleTypeDef*, void (*) (void)> tim_callback;
+	std::map<TIM_HandleTypeDef*, void (*) (void)> tim_handler;
+};
+
+extern TimerInterruptProc tim_interrupt_service;
